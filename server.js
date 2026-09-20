@@ -7,7 +7,42 @@ const PORT = process.env.PORT || 8080;
 const WSPATH = process.env.WSPATH || '/sys-metric-sync';
 const cleanUuid = UUID.replace(/-/g, '').toLowerCase();
 
-const HTML_DASHBOARD = ;
+const HTML_DASHBOARD = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ApexEdge Telemetry Mesh Gateway</title>
+  <style>
+    :root { --bg: #090d16; --card: #111827; --border: #1f2937; --text: #f3f4f6; --accent: #10b981; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 40px 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; max-width: 640px; width: 100%; padding: 36px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; margin-bottom: 20px; }
+    .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
+    h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px 0; color: #fff; }
+    p { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 24px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .stat { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+    .stat-label { font-size: 12px; text-transform: uppercase; color: #6b7280; font-weight: 600; }
+    .stat-val { font-size: 18px; font-weight: 700; color: #fff; margin-top: 6px; }
+    .footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: #4b5563; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge"><span class="dot"></span> APEXEDGE NODE OPERATIONAL</div>
+    <h1>Telemetry Ingestion Gateway</h1>
+    <p>Real-time distributed telemetry ingestion and metrics streaming edge node. High-availability Anycast mesh routing active.</p>
+    <div class="grid">
+      <div class="stat"><div class="stat-label">Cluster Health</div><div class="stat-val" style="color: #34d399;">99.99% Guaranteed</div></div>
+      <div class="stat"><div class="stat-label">Pipeline Protocol</div><div class="stat-val">WSS / Telemetry V2</div></div>
+      <div class="stat"><div class="stat-label">Encryption</div><div class="stat-val">TLS 1.3 / AES-GCM</div></div>
+      <div class="stat"><div class="stat-label">Engine Runtime</div><div class="stat-val">Node.js 22 LTS</div></div>
+    </div>
+    <div class="footer">ApexEdge Global Telemetry Mesh &copy; 2026. All telemetry streams are verified and encrypted.</div>
+  </div>
+</body>
+</html>`;
 
 const server = http.createServer((req, res) => {
   if (req.url === '/' || req.url === '/dashboard') {
@@ -33,7 +68,7 @@ const server = http.createServer((req, res) => {
 const wss = new WebSocketServer({ noServer: true });
 
 server.on('upgrade', (req, socket, head) => {
-  const url = new URL(req.url, );
+  const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   if (url.pathname === WSPATH) {
     wss.handleUpgrade(req, socket, head, (ws) => {
       wss.emit('connection', ws, req);
@@ -101,5 +136,5 @@ wss.on('connection', (ws) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log();
+  console.log(`ApexEdge Telemetry Gateway listening on 0.0.0.0:${PORT}`);
 });
