@@ -1,0 +1,12 @@
+{
+  "name": "cloud-telemetry-gateway",
+  "version": "1.0.0",
+  "description": "High-performance distributed telemetry ingestion and metrics streaming gateway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
