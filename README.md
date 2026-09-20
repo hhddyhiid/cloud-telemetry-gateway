@@ -4,7 +4,7 @@ High-performance distributed telemetry ingestion and real-time metrics streaming
 
 ## Features
 - **Zero Overhead**: Built on native Node.js streams and low-latency WebSocket protocols.
-- **Dual Health Checks**: Built-in  endpoint and live HTML observability dashboard.
+- **Dual Health Checks**: Built-in `/healthz` endpoint and live HTML observability dashboard.
 - **Docker-Ready**: Lightweight Alpine container, non-root user execution, memory footprint < 35MB.
 
 ## Deployment
